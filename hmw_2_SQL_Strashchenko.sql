@@ -37,6 +37,7 @@ values(2000),
 	  (3700);
 
 --Вывести таблицу salary
+	 
 select * from salary;
 
 --Удалить таблицу salary;
