@@ -53,6 +53,7 @@ values('QA_manual_junior'),
 	  ('Java_developer_junior'),
 	  ('Java_developer_middle'),
 	  ('Java_developer_senior');
+	 
 --«аполнить таблицу roles_salary	 
 insert into roles_salary(id_role, id_salary)
 values (1,2),
@@ -69,7 +70,7 @@ values (1,2),
 alter table roles	
 add column parking int;
 
---ƒобавить в колонку parking значение 1, если работник €вл€етс€ senior
+--ѕрисвоить значение 1 в колонке parking, если работник €вл€етс€ senior
 update roles 
 set parking = 1
 where role_title like '%senior';
