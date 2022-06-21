@@ -349,6 +349,7 @@ inner join roles on employee_names.id_role = roles.id
 inner join roles_salary on roles.id = roles_salary.id_role 
 inner join salary on roles_salary.id_salary = salary.id 
 order by salary.monthly_salary asc;
+
 -- 30. Вывести имена, должности и ЗП всех специалистов по возрастанию у специалистов у которых ЗП от 1700 до 2300
 select employee_names.name, roles.role_title, salary.monthly_salary
 from employee_names 
