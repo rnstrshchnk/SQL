@@ -77,8 +77,8 @@ set parking = 1
 where role_title like '%senior';
 
 --Переименовать колонку parking на taxi
-alter table roles 
-rename column parking to taxi;
+alter table employee_names 
+rename column employee_name to name;
 
 --Удалить колонку taxi
 alter table roles 
@@ -114,19 +114,164 @@ left join roles_salary on roles_salary.id_salary = salary.id
 where roles_salary.id_salary is null and salary.monthly_salary <'2000';
 
 -- 5. Найти всех работников кому не начислена ЗП.
+select roles_salary.id_role, roles.role_title 
+from roles 
+left join roles_salary on roles_salary.id_role  = roles.id 
+where roles_salary.id_role is null;
+
 -- 6. Вывести всех работников с названиями их должности.
+drop table employee_names;
+
+create table employee_names (
+id_employee serial primary key,
+id_role int not null,
+name varchar (50) not null,
+foreign key (id_role)
+	references roles(id)
+);
+
+select * from employee_names;
+
+insert into employee_names(id_role,name)
+values (1,'Ivan'),
+	   (1,'Arina'),
+	   (2,'Anna'),
+	   (3,'Elena'),
+	   (4,'Vladislav'),
+	   (4,'Evgeny'),
+	   (5,'Vadim'),
+	   (6,'Maxim'),
+	   (7,'Oleg'),
+	   (8,'Irina'),
+	   (8,'Anatoly'),
+	   (9,'Angrej');
+
+select employee_names.name, roles.role_title 
+from employee_names inner join roles on employee_names.id_role = roles.id ;
+
 -- 7. Вывести имена и должность только Java разработчиков.
+select employee_names.name, roles.role_title 
+from employee_names inner join roles on employee_names.id_role = roles.id 
+where roles.role_title like '%Java%';
+
 -- 8. Вывести имена и должность только Python разработчиков.
+insert into roles (role_title)
+values ('Python_developer_junior'),
+	  ('Python_developer_middle'),
+	  ('Python_developer_senior');
+
+select * from roles;	
+
+insert into employee_names(id_role, name)
+values (10,'Aleksandr'),
+	   (11,'Inna'),
+	   (12,'Vladimir'),
+	   (12,'Pavel');
+	  
+select * from employee_names;
+	  
+select employee_names.name, roles.role_title 
+from employee_names inner join roles on employee_names.id_role = roles.id 
+where roles.role_title like '%Python%';
+
 -- 9. Вывести имена и должность всех QA инженеров.
+select employee_names.name, roles.role_title 
+from employee_names inner join roles on employee_names.id_role = roles.id 
+where roles.role_title like '%QA%';
+
 -- 10. Вывести имена и должность ручных QA инженеров.
+select employee_names.name, roles.role_title, salary.monthly_salary  
+from employee_names 
+inner join roles on employee_names.id_role = roles.id 
+inner join 
+where roles.role_title like '%manual%';
+
 -- 11. Вывести имена и должность автоматизаторов QA
+select employee_names.name, roles.role_title 
+from employee_names inner join roles on employee_names.id_role = roles.id 
+where roles.role_title like '%automation%';
+
 -- 12. Вывести имена и зарплаты Junior специалистов
+select employee_names.name, salary.monthly_salary  
+from employee_names 
+inner join roles on employee_names.id_role = roles.id 
+inner join roles_salary on roles.id = roles_salary.id_role 
+inner join salary on roles_salary.id_salary = salary.id 
+where roles.role_title like '%junior%';
+
 -- 13. Вывести имена и зарплаты Middle специалистов
+select employee_names.name, salary.monthly_salary  
+from employee_names 
+inner join roles on employee_names.id_role = roles.id 
+inner join roles_salary on roles.id = roles_salary.id_role 
+inner join salary on roles_salary.id_salary = salary.id 
+where roles.role_title like '%middle%';
+
 -- 14. Вывести имена и зарплаты Senior специалистов
+select employee_names.name, salary.monthly_salary  
+from employee_names 
+inner join roles on employee_names.id_role = roles.id 
+inner join roles_salary on roles.id = roles_salary.id_role 
+inner join salary on roles_salary.id_salary = salary.id 
+where roles.role_title like '%senior%';
+
 -- 15. Вывести зарплаты Java разработчиков
+select salary.monthly_salary  
+from employee_names 
+inner join roles on employee_names.id_role = roles.id 
+inner join roles_salary on roles.id = roles_salary.id_role 
+inner join salary on roles_salary.id_salary = salary.id 
+where roles.role_title like '%Java%';
+
 -- 16. Вывести зарплаты Python разработчиков
+select salary.monthly_salary  
+from employee_names 
+inner join roles on employee_names.id_role = roles.id 
+inner join roles_salary on roles.id = roles_salary.id_role 
+inner join salary on roles_salary.id_salary = salary.id 
+where roles.role_title like '%Python%';
+
 -- 17. Вывести имена и зарплаты Junior Python разработчиков
+insert into roles_salary(id_role, id_salary)
+values (10,11),
+	   (11,12),
+	   (12,9);
+	  
+select salary.monthly_salary  
+from employee_names 
+inner join roles on employee_names.id_role = roles.id 
+inner join roles_salary on roles.id = roles_salary.id_role 
+inner join salary on roles_salary.id_salary = salary.id 
+where roles.role_title like '%Python%' and roles.role_title like '%junior%';
+
 -- 18. Вывести имена и зарплаты Middle JS разработчиков
+insert into roles (role_title)
+values ('JS_developer_junior'),
+	  ('JS_developer_middle'),
+	  ('JS_developer_senior');
+
+select * from roles;	
+
+insert into employee_names(id_role, name)
+values (10,'Aleksandr'),
+	   (11,'Inna'),
+	   (12,'Vladimir'),
+	   (12,'Pavel');
+	  
+insert into roles_salary(id_role, id_salary)
+values (10,11),
+	   (11,12),
+	   (12,9);
+	  
+select * from employee_names;
+
+select salary.monthly_salary  
+from employee_names 
+inner join roles on employee_names.id_role = roles.id 
+inner join roles_salary on roles.id = roles_salary.id_role 
+inner join salary on roles_salary.id_salary = salary.id 
+where roles.role_title like '%JS%' and roles.role_title like '%middle%';
+
 -- 19. Вывести имена и зарплаты Senior Java разработчиков
 -- 20. Вывести зарплаты Junior QA инженеров
 -- 21. Вывести среднюю зарплату всех Junior специалистов
