@@ -343,6 +343,35 @@ inner join salary on roles_salary.id_salary = salary.id
 where roles.role_title like '%developer%';
 
 -- 29. Вывести имена, должности и ЗП всех специалистов по возрастанию
+select employee_names.name, roles.role_title, salary.monthly_salary
+from employee_names 
+inner join roles on employee_names.id_role = roles.id 
+inner join roles_salary on roles.id = roles_salary.id_role 
+inner join salary on roles_salary.id_salary = salary.id 
+order by salary.monthly_salary asc;
 -- 30. Вывести имена, должности и ЗП всех специалистов по возрастанию у специалистов у которых ЗП от 1700 до 2300
+select employee_names.name, roles.role_title, salary.monthly_salary
+from employee_names 
+inner join roles on employee_names.id_role = roles.id 
+inner join roles_salary on roles.id = roles_salary.id_role 
+inner join salary on roles_salary.id_salary = salary.id 
+where salary.monthly_salary between 1700 and 2300
+order by salary.monthly_salary asc;
+
 -- 31. Вывести имена, должности и ЗП всех специалистов по возрастанию у специалистов у которых ЗП меньше 2300
+select employee_names.name, roles.role_title, salary.monthly_salary
+from employee_names 
+inner join roles on employee_names.id_role = roles.id 
+inner join roles_salary on roles.id = roles_salary.id_role 
+inner join salary on roles_salary.id_salary = salary.id 
+where salary.monthly_salary < '2300'
+order by salary.monthly_salary asc;
+
 -- 32. Вывести имена, должности и ЗП всех специалистов по возрастанию у специалистов у которых ЗП равна 1100, 1500, 2000
+select employee_names.name, roles.role_title, salary.monthly_salary
+from employee_names 
+inner join roles on employee_names.id_role = roles.id 
+inner join roles_salary on roles.id = roles_salary.id_role 
+inner join salary on roles_salary.id_salary = salary.id 
+where salary.monthly_salary in('1100','1500','2000')
+order by salary.monthly_salary asc;
