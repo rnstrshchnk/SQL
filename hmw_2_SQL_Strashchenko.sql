@@ -217,18 +217,16 @@ where roles.role_title like '%senior%';
 
 -- 15. Вывести зарплаты Java разработчиков
 select salary.monthly_salary  
-from employee_names 
-inner join roles on employee_names.id_role = roles.id 
+from roles 
 inner join roles_salary on roles.id = roles_salary.id_role 
 inner join salary on roles_salary.id_salary = salary.id 
 where roles.role_title like '%Java%';
 
 -- 16. Вывести зарплаты Python разработчиков
 select salary.monthly_salary  
-from employee_names 
-inner join roles on employee_names.id_role = roles.id 
+from roles 
 inner join roles_salary on roles.id = roles_salary.id_role 
-inner join salary on roles_salary.id_salary = salary.id 
+inner join salary on roles_salary.id_salary = salary.id  
 where roles.role_title like '%Python%';
 
 -- 17. Вывести имена и зарплаты Junior Python разработчиков
@@ -237,7 +235,7 @@ values (10,11),
 	   (11,12),
 	   (12,9);
 	  
-select salary.monthly_salary  
+select employee_names.name, salary.monthly_salary  
 from employee_names 
 inner join roles on employee_names.id_role = roles.id 
 inner join roles_salary on roles.id = roles_salary.id_role 
@@ -247,25 +245,25 @@ where roles.role_title like '%Python%' and roles.role_title like '%junior%';
 -- 18. Вывести имена и зарплаты Middle JS разработчиков
 insert into roles (role_title)
 values ('JS_developer_junior'),
-	  ('JS_developer_middle'),
-	  ('JS_developer_senior');
+	   ('JS_developer_middle'),
+	   ('JS_developer_senior');
 
 select * from roles;	
 
 insert into employee_names(id_role, name)
-values (10,'Aleksandr'),
-	   (11,'Inna'),
-	   (12,'Vladimir'),
-	   (12,'Pavel');
+values (13,'Arina'),
+	   (13,'Vadim'),
+	   (14,'Andrej'),
+	   (15,'Elena');
 	  
 insert into roles_salary(id_role, id_salary)
-values (10,11),
-	   (11,12),
-	   (12,9);
+values (13,11),
+	   (14,12),
+	   (15,9);
 	  
 select * from employee_names;
 
-select salary.monthly_salary  
+select employee_names.name, salary.monthly_salary  
 from employee_names 
 inner join roles on employee_names.id_role = roles.id 
 inner join roles_salary on roles.id = roles_salary.id_role 
@@ -273,15 +271,77 @@ inner join salary on roles_salary.id_salary = salary.id
 where roles.role_title like '%JS%' and roles.role_title like '%middle%';
 
 -- 19. Вывести имена и зарплаты Senior Java разработчиков
+select employee_names.name, salary.monthly_salary  
+from employee_names 
+inner join roles on employee_names.id_role = roles.id 
+inner join roles_salary on roles.id = roles_salary.id_role 
+inner join salary on roles_salary.id_salary = salary.id 
+where roles.role_title like '%Java%' and roles.role_title like '%senior%';
+
 -- 20. Вывести зарплаты Junior QA инженеров
+select salary.monthly_salary  
+from roles 
+inner join roles_salary on roles.id = roles_salary.id_role 
+inner join salary on roles_salary.id_salary = salary.id 
+where roles.role_title like '%QA%' and roles.role_title like '%junior%';
+
 -- 21. Вывести среднюю зарплату всех Junior специалистов
+select avg(salary.monthly_salary)
+from roles 
+inner join roles_salary on roles.id = roles_salary.id_role 
+inner join salary on roles_salary.id_salary = salary.id 
+where roles.role_title like '%junior%';
+
 -- 22. Вывести сумму зарплат JS разработчиков
+select sum(salary.monthly_salary)
+from roles 
+inner join roles_salary on roles.id = roles_salary.id_role 
+inner join salary on roles_salary.id_salary = salary.id 
+where roles.role_title like '%JS%';
+
 -- 23. Вывести минимальную ЗП QA инженеров
+select min(salary.monthly_salary)
+from roles 
+inner join roles_salary on roles.id = roles_salary.id_role 
+inner join salary on roles_salary.id_salary = salary.id 
+where roles.role_title like '%QA%';
+
 -- 24. Вывести максимальную ЗП QA инженеров
+select max(salary.monthly_salary)
+from roles 
+inner join roles_salary on roles.id = roles_salary.id_role 
+inner join salary on roles_salary.id_salary = salary.id 
+where roles.role_title like '%QA%';
+
 -- 25. Вывести количество QA инженеров
+select count(employee_names.name)
+from employee_names 
+inner join roles on employee_names.id_role = roles.id 
+inner join roles_salary on roles.id = roles_salary.id_role 
+where roles.role_title like '%QA%';
+
 -- 26. Вывести количество Middle специалистов.
+select count(employee_names.name)
+from employee_names 
+inner join roles on employee_names.id_role = roles.id 
+inner join roles_salary on roles.id = roles_salary.id_role 
+where roles.role_title like '%middle%';
+
 -- 27. Вывести количество разработчиков
+select count(employee_names.name)
+from employee_names 
+inner join roles on employee_names.id_role = roles.id 
+inner join roles_salary on roles.id = roles_salary.id_role 
+where roles.role_title like '%developer%';
+
 -- 28. Вывести фонд (сумму) зарплаты разработчиков.
+select sum(salary.monthly_salary)
+from employee_names 
+inner join roles on employee_names.id_role = roles.id 
+inner join roles_salary on roles.id = roles_salary.id_role 
+inner join salary on roles_salary.id_salary = salary.id 
+where roles.role_title like '%developer%';
+
 -- 29. Вывести имена, должности и ЗП всех специалистов по возрастанию
 -- 30. Вывести имена, должности и ЗП всех специалистов по возрастанию у специалистов у которых ЗП от 1700 до 2300
 -- 31. Вывести имена, должности и ЗП всех специалистов по возрастанию у специалистов у которых ЗП меньше 2300
