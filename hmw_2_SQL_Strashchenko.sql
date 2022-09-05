@@ -1,3 +1,37 @@
+create table table1 (
+id int)
+
+insert into table1 (id)
+values(1),
+	  (2),
+	  (3),
+	  (3),
+	  (0),
+	  (Null),
+	  (Null);
+
+select *
+from table1;
+
+create table table2 (
+id int)
+
+insert into table2 (id)
+values(1),
+	  (2),
+	  (3),
+	  (4),
+	  (0),
+	  (0),
+	  (Null);
+
+select *
+from table2;
+
+select table1.id, table2.id
+from table1 
+inner join table2 on table1.id=table2.id;
+
 --Создать таблицу salary
 create table salary (
 id serial primary key,
